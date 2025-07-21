@@ -1,6 +1,6 @@
-## Mis configuraciones: Neovim + Kitty + Zellij
+# Mis configuraciones: Neovim + Kitty + Zellij
 
-# Este repositorio contiene mis configuraciones personales para:
+## Este repositorio contiene mis configuraciones personales para:
 
 - Neovim (`init.lua`)
 - Kitty (terminal)
