@@ -6,5 +6,6 @@
 - Kitty (terminal)
 - Zellij (multiplexor)
 
-![Preview](assets/preview.png)
-
+<div align="center">
+  <img src="assets/preview.png" alt="Preview" width="60%">
+</div>
