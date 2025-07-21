@@ -262,6 +262,11 @@ plugins {
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
 }
+
+theme "dracula"
+
+
+
  
 // Use a simplified UI without special fonts (arrow glyphs)
 // Options:
@@ -273,7 +278,6 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-theme "catppuccin-mocha"
  
 // Choose the base input mode of zellij.
 // Default: normal

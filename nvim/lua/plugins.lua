@@ -3,6 +3,32 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim' -- como gestor de plugins ocupo packer
 
+
+  use {
+  'goolord/alpha-nvim',
+  config = function()
+    local alpha = require'alpha'
+    local dashboard = require'alpha.themes.dashboard'
+
+    dashboard.section.header.val = {
+      " ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
+      " ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
+      " ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
+      " ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║",
+      " ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║",
+      " ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝",
+    }
+
+    dashboard.section.buttons.val = {
+      dashboard.button("e", "  Nuevo archivo", ":ene <BAR> startinsert <CR>"),
+      dashboard.button("q", "  Salir de Neovim", ":qa<CR>"),
+    }
+
+
+    alpha.setup(dashboard.config)
+  end
+}
+
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'williamboman/mason.nvim'
