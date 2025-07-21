@@ -6,4 +6,4 @@
 - Kitty (terminal)
 - Zellij (multiplexor)
 
-![preview de las configs][assets/preview.png]
+![preview de las configs](assets/preview.png)
