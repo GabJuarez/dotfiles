@@ -1,33 +1,29 @@
-vim.cmd [[packadd packer.nvim]]
-
 return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim' -- como gestor de plugins ocupo packer
-
+  use 'wbthomason/packer.nvim'
 
   use {
-  'goolord/alpha-nvim',
-  config = function()
-    local alpha = require'alpha'
-    local dashboard = require'alpha.themes.dashboard'
+    'goolord/alpha-nvim',
+    config = function()
+      local alpha = require'alpha'
+      local dashboard = require'alpha.themes.dashboard'
 
-    dashboard.section.header.val = {
-      " ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
-      " ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
-      " ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
-      " ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║",
-      " ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║",
-      " ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝",
-    }
+      dashboard.section.header.val = {
+        " ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗",
+        " ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║",
+        " ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║",
+        " ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║",
+        " ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║",
+        " ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝",
+      }
 
-    dashboard.section.buttons.val = {
-      dashboard.button("e", "  Nuevo archivo", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("q", "  Salir de Neovim", ":qa<CR>"),
-    }
+      dashboard.section.buttons.val = {
+        dashboard.button("e", "  Nuevo archivo", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("q", "  Salir de Neovim", ":qa<CR>"),
+      }
 
-
-    alpha.setup(dashboard.config)
-  end
-}
+      alpha.setup(dashboard.config)
+    end
+  }
 
   -- LSP
   use 'neovim/nvim-lspconfig'
@@ -41,46 +37,41 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
 
-  --indent line
+  -- indent line
   use("lukas-reineke/indent-blankline.nvim")
-
-  -- plugin prettier
-  use {'neoclide/coc.nvim', branch = 'release'}
 
   -- Snippets
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
 
+  -- Tema
   use({
-  'projekt0n/github-nvim-theme',
-  config = function()
-    require('github-theme').setup({
-      
-    })
-
-    vim.cmd('colorscheme github_dark_default')
-  end
+    'projekt0n/github-nvim-theme',
+    config = function()
+      require('github-theme').setup({})
+      vim.cmd('colorscheme github_dark_default')
+    end
   })
 
   -- gestor de archivos
- use {
-  'nvim-tree/nvim-tree.lua',
-  requires = { 'nvim-tree/nvim-web-devicons' },
-  config = function()
-    require("nvim-tree").setup({
-      renderer = {
-        icons = {
-          show = {
-            git = true,         -- mostrar iconos de git
-            folder = true,      -- mostrar iconos de carpetas
-            file = true,        -- mostrar iconos de archivos
-            folder_arrow = true -- mostrar flechas de carpeta
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require("nvim-tree").setup({
+        renderer = {
+          icons = {
+            show = {
+              git = true,
+              folder = true,
+              file = true,
+              folder_arrow = true,
+            },
           },
         },
-      },
-    })
-  end
-}
+      })
+    end
+  }
 
   -- barra de estado
   use {
@@ -98,7 +89,7 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- barra de pestañas para buffers (tabs)
+  -- barra de pestañas para buffers
   use {
     'akinsho/bufferline.nvim',
     requires = 'nvim-tree/nvim-web-devicons',
@@ -106,7 +97,7 @@ return require('packer').startup(function(use)
       require("bufferline").setup {
         options = {
           diagnostics = "nvim_lsp",
-          show_buffer_icons = false, -- quita íconos si quieres
+          show_buffer_icons = false,
           show_buffer_close_icons = true,
           separator_style = "thin",
           always_show_bufferline = true,
@@ -123,10 +114,10 @@ return require('packer').startup(function(use)
     end,
   }
 
-   -- panel de errores parecido a errror lens
+  -- panel de errores
   use {
     "folke/trouble.nvim",
-    requires = "nvim-tree/nvim-web-devicons", -- para los iconos
+    requires = "nvim-tree/nvim-web-devicons",
     config = function()
       require("trouble").setup {
         auto_open = false,
@@ -135,7 +126,4 @@ return require('packer').startup(function(use)
       }
     end
   }
-
-
 end)
-

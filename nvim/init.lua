@@ -21,7 +21,6 @@ require("ibl").setup()
 -- Iconos para nvim-tree y otros
 require('nvim-web-devicons').setup()
 
-
 -- LSP para C y Python
 local lspconfig = require('lspconfig')
 lspconfig.clangd.setup{}
@@ -40,7 +39,13 @@ cmp.setup({
   mapping = {
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>']     = cmp.mapping.abort(),
-    ['<CR>']      = cmp.mapping.confirm({ select = true }),
+    ['<CR>']      = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm({ select = true })
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
     ['<C-j>']     = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -65,6 +70,5 @@ cmp.setup({
 })
 
 -- Atajos personalizados
-vim.keymap.set("n", "<C-d>", ":CocCommand prettier.formatFile<CR>", { silent = true }) -- Formateo
+vim.keymap.set("n", "<C-d>", function() vim.lsp.buf.format() end, { noremap = true, silent = true }) -- Formateo
 vim.keymap.set("n", "<C-f>", ":NvimTreeToggle<CR>", { noremap = true, silent = true }) -- Explorador
-
