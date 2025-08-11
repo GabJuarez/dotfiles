@@ -21,10 +21,24 @@ require("ibl").setup()
 -- Iconos para nvim-tree y otros
 require('nvim-web-devicons').setup()
 
--- LSP para C y Python
+-- Mason
+require("mason").setup()
+
+-- LSP para C, Python y Java
 local lspconfig = require('lspconfig')
-lspconfig.clangd.setup{}
-lspconfig.pyright.setup{}
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+lspconfig.clangd.setup{
+    capabilities = capabilities
+}
+lspconfig.pyright.setup{
+    capabilities = capabilities
+}
+
+lspconfig.jdtls.setup{
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/jdtls" },
+    capabilities = capabilities
+}
 
 -- Autocompletado con nvim-cmp y luasnip
 local cmp = require('cmp')
@@ -36,30 +50,31 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
+  completion = {
+    autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged } -- Activa al escribir
+  },
   mapping = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>']     = cmp.mapping.abort(),
-    ['<CR>']      = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.confirm({ select = true })
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ['<C-j>']     = cmp.mapping(function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
     end, { "i", "s" }),
-    ['<C-k>']     = cmp.mapping(function(fallback)
+
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
     end, { "i", "s" }),
+
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Enter para aceptar
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -67,6 +82,16 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'path' },
   })
+})
+
+-- Forzar autocompletado al abrir un archivo Java
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.java",
+  callback = function()
+    vim.defer_fn(function()
+      require('cmp').complete()
+    end, 300) -- pequeño delay para que jdtls cargue
+  end,
 })
 
 -- Atajos personalizados
