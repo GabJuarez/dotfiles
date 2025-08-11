@@ -1,6 +1,7 @@
 -- Cargar packer
 vim.cmd [[packadd packer.nvim]]
 
+
 -- Configuración base
 require("user.settings")
 require("user.keymaps")

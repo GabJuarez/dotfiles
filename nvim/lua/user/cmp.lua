@@ -42,6 +42,22 @@ cmp.setup({
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*.java",
   callback = function()
-    vim.defer_fn(function() cmp.complete() end, 300)
+    vim.defer_fn(function()
+      if vim.api.nvim_get_mode().mode == 'n' then
+        cmp.complete()
+      end
+    end, 300)
   end,
 })
+
+
+--autopairs
+local autopairs = require('nvim-autopairs')
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
+

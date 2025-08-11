@@ -35,4 +35,29 @@ return require('packer').startup(function(use)
 
   -- Panel de errores
   use { "folke/trouble.nvim", requires = 'nvim-tree/nvim-web-devicons', config = function() require("user.plugin-config.trouble") end }
+
+  -- Autopairs
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('user.plugin-config.nvim-autopairs')
+    end
+  }
+
+  -- Plugin para proyectos
+  use {
+    'ahmedkhalf/project.nvim',
+    config = function()
+      require('user.plugin-config.project')
+    end
+  }
+
+  -- Telescope
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} },
+    config = function()
+      require('user.plugin-config.telescope')
+    end
+  }
 end)
