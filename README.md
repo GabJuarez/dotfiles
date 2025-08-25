@@ -5,3 +5,4 @@
 - Neovim (`init.lua`)
 - alacritty (terminal)
 
+![preview][/assets/preview.png]
